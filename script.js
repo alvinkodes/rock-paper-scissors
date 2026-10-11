@@ -27,6 +27,12 @@ const playRound = (humanChoice, computerChoice) => {
     scores.textContent = ` (Human Score: ${humanScore}\nComputer Score: ${computerScore})`;
     text.appendChild(scores);
     container.appendChild(text);
+    if (humanScore == 5 || computerScore == 5) {
+        humanScore > computerScore ?
+        alert("Human wins!") : alert("Computer wins!");
+        humanScore = 0; computerScore = 0;
+        container.replaceChildren();
+    }
 
 }
 
@@ -34,8 +40,6 @@ const buttons = document.querySelectorAll("button");
 
 buttons.forEach((button) => {
     button.addEventListener('click', (e) => {
-        console.log(e.target);
-        console.log(e.target.textContent);
         playRound(e.target.textContent, getComputerChoice());
     })
 })
