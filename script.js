@@ -1,47 +1,43 @@
 let humanScore = 0;
 let computerScore = 0;
 
+const container = document.querySelector("#result");
+
 const getComputerChoice = () => {
     const choices = ['rock', 'paper', 'scissors']
     return choices.at(Math.floor(Math.random() * 3))
 }
 
-const getHumanChoice = () => {
-    const choice = prompt('Rock, Paper or Scissors?')
-    return choice
-}
-
 const playRound = (humanChoice, computerChoice) => {
+    const text = document.createElement('p');
     humanChoice = humanChoice.toLowerCase()
     if (humanChoice === computerChoice)
-        return console.log("It's a draw!")
-    if ((humanChoice == 'rock' && computerChoice == 'scissors')
+        text.textContent = "It's a draw!";
+    else if ((humanChoice == 'rock' && computerChoice == 'scissors')
         || (humanChoice == 'paper' && computerChoice == 'rock')
         || (humanChoice == 'scissors' && computerChoice == 'paper')) {
         humanScore++;
-        console.log(`You win! ${humanChoice} beats ${computerChoice}!`)
+        text.textContent = `You win! ${humanChoice} beats ${computerChoice}!`;
         }
     else {
         computerScore++;
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}!`)
+        text.textContent = `You lose! ${computerChoice} beats ${humanChoice}!`;
     }
+    const scores = document.createElement('span');
+    scores.textContent = ` (Human Score: ${humanScore}\nComputer Score: ${computerScore})`;
+    text.appendChild(scores);
+    container.appendChild(text);
+
 }
 
-const playGame = () => {
- 
-    for(let i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection)
-    }
-    if (humanScore == computerScore)
-        console.log("It's a draw!")
-    else if (humanScore > computerScore)
-        console.log('Human wins!')
-    else
-        console.log('Computer wins!')
-    console.log(`Human Score: ${humanScore}\nComputer Score: ${computerScore}`)
-}
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+        console.log(e.target);
+        console.log(e.target.textContent);
+        playRound(e.target.textContent, getComputerChoice());
+    })
+})
 
 
-playGame()
